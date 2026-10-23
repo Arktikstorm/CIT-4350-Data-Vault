@@ -38,11 +38,6 @@ CREATE TABLE OperationalStatus (
 -- Fixed stops along the route, one every quarter mile.
 -- Runoff columns let us compare readings near vs. away from runoff.
 
-CREATE TABLE OperationalStatus (
-    status_code   VARCHAR(30)  PRIMARY KEY,
-    description   VARCHAR(150) NOT NULL
-);
-
 CREATE TABLE SamplingPoint (
     point_id               INT AUTO_INCREMENT PRIMARY KEY,
     point_label            VARCHAR(20)  NOT NULL UNIQUE,
