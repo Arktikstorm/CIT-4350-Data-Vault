@@ -10,7 +10,7 @@
 -- Run order: 01_create_tables.sql -> 02_insert_mock_data.sql -> 03_queries.sql
 -- =====================================================================
 
-DROP TABLE IF EXISTS sdg14_hudson;
+DROP DATABASE IF EXISTS sdg14_hudson;
 CREATE DATABASE sdg14_hudson;
 USE sdg14_hudson;
 
