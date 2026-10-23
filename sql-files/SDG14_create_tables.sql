@@ -43,6 +43,26 @@ CREATE TABLE OperationalStatus (
     description   VARCHAR(150) NOT NULL
 );
 
+CREATE TABLE SamplingPoint (
+    point_id               INT AUTO_INCREMENT PRIMARY KEY,
+    point_label            VARCHAR(20)  NOT NULL UNIQUE,
+    river_mile             DECIMAL(5,2) NOT NULL,
+    latitude               DECIMAL(9,6) NOT NULL,
+    longitude              DECIMAL(9,6) NOT NULL,
+    nearest_runoff_source  VARCHAR(80),
+    runoff_distance_m      INT,
+    CHECK (latitude  BETWEEN -90  AND 90),
+    CHECK (longitude BETWEEN -180 AND 180)
+);
+
+-- Plastic types the lab spectrometer can identify (PE, PP, PET, ...).
+
+CREATE TABLE PolymerType (
+    polymer_id      INT AUTO_INCREMENT PRIMARY KEY,
+    polymer_name    VARCHAR(60) NOT NULL UNIQUE,
+    abbreviation    VARCHAR(10) NOT NULL UNIQUE,
+    common_sources  VARCHAR(120)
+);
 
 
     
