@@ -59,7 +59,7 @@ The first script drops and recreates the `sdg14_hudson` database, so all three c
 - [x] Schema (DDL)
 - [x] Mock data
 - [x] Queries
-- [ ] Data dictionary
+- [x] Data dictionary
 - [ ] Indexes
 - [ ] Normalization
 - [ ] Project definition
