@@ -95,6 +95,9 @@ CREATE TABLE Reading (
     CHECK (salinity_ppt         >= 0)
 );
 
+-- One physical water sample per reading (1:1 via UNIQUE reading_id).
+-- analyzed_at stays NULL until the lab has processed the sample.
+
 CREATE TABLE WaterSample (
     sample_id     INT AUTO_INCREMENT PRIMARY KEY,
     reading_id    INT          NOT NULL UNIQUE,
@@ -104,6 +107,9 @@ CREATE TABLE WaterSample (
     FOREIGN KEY (reading_id) REFERENCES Reading(reading_id),
     CHECK (volume_l > 0)
 );
+
+-- Which polymers were found in which sample, and how many particles.
+-- Composite PK stops the same polymer being logged twice per sample.
 
 CREATE TABLE SampleDetection (
     sample_id       INT NOT NULL,
