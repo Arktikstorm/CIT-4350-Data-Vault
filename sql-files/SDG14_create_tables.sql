@@ -88,6 +88,8 @@ CREATE TABLE Reading (
     FOREIGN KEY (point_id)    REFERENCES SamplingPoint(point_id),
     FOREIGN KEY (status_code) REFERENCES OperationalStatus(status_code),
     UNIQUE (run_id, point_id),
+    CHECK (latitude             BETWEEN -90  AND 90),
+    CHECK (longitude            BETWEEN -180 AND 180),
     CHECK (water_temp_f         BETWEEN 32 AND 100),
     CHECK (ph                   BETWEEN 0 AND 14),
     CHECK (dissolved_oxygen_mgl >= 0),
