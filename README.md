@@ -39,6 +39,7 @@ _Click the diagram to open it full size._
 diagrams/    ER diagrams (final - ER_Diagram_SG14.png)
 documents/   project plan, guidance, key terms, status report
 sql-files/   schema, mock data, and queries
+presentation/ powerpoint drafts
 ```
 
 ## Getting started
