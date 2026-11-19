@@ -1,42 +1,22 @@
--- =====================================================================
--- SDG 14 Hudson River Water Quality Database
--- 01_create_tables.sql  |  MySQL 8.0.16+ (CHECK constraints are enforced)
---
--- Eight tables:
---   Lookup / reference : Drone, OperationalStatus, SamplingPoint, PolymerType
---   Core               : Run, Reading, WaterSample
---   Junction (M:N)     : SampleDetection  (WaterSample <-> PolymerType)
---
--- Run order: 01_create_tables.sql -> 02_insert_mock_data.sql -> 03_queries.sql
--- =====================================================================
+-- SDG 14 Hudson River Water Quality Database  |  MySQL 8.0+
+-- Eight tables: 4 lookup/reference, 3 core, 1 junction.
 
+-- re-runnable: recreates a clean DB each time
 DROP DATABASE IF EXISTS sdg14_hudson;
 CREATE DATABASE sdg14_hudson;
 USE sdg14_hudson;
 
-
--- ---------------------------------------------------------------------
--- Lookup / reference tables (parents, created first)
--- ---------------------------------------------------------------------
-
--- One row per water drone.
 CREATE TABLE Drone (
-	drone_id 			INT AUTO_INCREMENT PRIMARY KEY,
-    drone_name			VARCHAR(50)	NOT NULL,
-    model				VARCHAR(50),
-    commissioned_date	DATE		NOT NULL
-    );
-
--- Allowed status codes. A lookup table stops typos from creating
--- false categories (e.g. 'ACTIVE_SAMPLNG').
-
-CREATE TABLE OperationalStatus (
-	status_code			VARCHAR(30)	PRIMARY KEY,
-    description			VARCHAR(150) NOT NULL
+    drone_id           INT AUTO_INCREMENT PRIMARY KEY,
+    drone_name         VARCHAR(50)  NOT NULL,
+    model              VARCHAR(50),
+    commissioned_date  DATE         NOT NULL
 );
 
--- Fixed stops along the route, one every quarter mile.
--- Runoff columns let us compare readings near vs. away from runoff.
+CREATE TABLE OperationalStatus (
+    status_code   VARCHAR(30)  PRIMARY KEY,
+    description   VARCHAR(150) NOT NULL
+);
 
 CREATE TABLE SamplingPoint (
     point_id               INT AUTO_INCREMENT PRIMARY KEY,
@@ -49,8 +29,6 @@ CREATE TABLE SamplingPoint (
     CHECK (latitude  BETWEEN -90  AND 90),
     CHECK (longitude BETWEEN -180 AND 180)
 );
-
--- Plastic types the lab spectrometer can identify (PE, PP, PET, ...).
 
 CREATE TABLE PolymerType (
     polymer_id      INT AUTO_INCREMENT PRIMARY KEY,
@@ -88,17 +66,12 @@ CREATE TABLE Reading (
     FOREIGN KEY (point_id)    REFERENCES SamplingPoint(point_id),
     FOREIGN KEY (status_code) REFERENCES OperationalStatus(status_code),
     UNIQUE (run_id, point_id),
-    CHECK (latitude             BETWEEN -90  AND 90),
-    CHECK (longitude            BETWEEN -180 AND 180),
     CHECK (water_temp_f         BETWEEN 32 AND 100),
     CHECK (ph                   BETWEEN 0 AND 14),
     CHECK (dissolved_oxygen_mgl >= 0),
     CHECK (turbidity_ntu        >= 0),
     CHECK (salinity_ppt         >= 0)
 );
-
--- One physical water sample per reading (1:1 via UNIQUE reading_id).
--- analyzed_at stays NULL until the lab has processed the sample.
 
 CREATE TABLE WaterSample (
     sample_id     INT AUTO_INCREMENT PRIMARY KEY,
@@ -109,9 +82,6 @@ CREATE TABLE WaterSample (
     FOREIGN KEY (reading_id) REFERENCES Reading(reading_id),
     CHECK (volume_l > 0)
 );
-
--- Which polymers were found in which sample, and how many particles.
--- Composite PK stops the same polymer being logged twice per sample.
 
 CREATE TABLE SampleDetection (
     sample_id       INT NOT NULL,
@@ -124,6 +94,3 @@ CREATE TABLE SampleDetection (
     FOREIGN KEY (polymer_id) REFERENCES PolymerType(polymer_id),
     CHECK (particle_count >= 0)
 );
-
-
-    
