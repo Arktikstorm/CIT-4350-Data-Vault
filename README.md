@@ -28,7 +28,7 @@ erDiagram
 
 ### Full ER diagram
 
-[![ER Diagram](diagrams/ER_Diagram_SDG14.png)](diagrams/ER_Diagram_SDG14.png)
+[![ER Diagram](diagrams/ER_Diagram_SDG14V2.png)](diagrams/ER_Diagram_SDG14V2.png)
 
 _Click the diagram to open it full size._
 
