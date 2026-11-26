@@ -9,7 +9,7 @@ A relational database supporting a water drone that monitors water quality and m
 | Member               | Focus area                     |
 | -------------------- | ------------------------------ |
 | Justin Reichelt      | normalization & relationships  |
-| Prerit Acharya       | optional relationships & joins |
+| ~~Prerit Acharya~~       | optional relationships & joins |
 | Hendrik Vanwingerden | data types & constraints       |
 | Josiah Maddicks      | requirements & schema design   |
 
@@ -36,10 +36,11 @@ _Click the diagram to open it full size._
 ## Repository layout
 
 ```
-diagrams/    ER diagrams (final - ER_Diagram_SDG14.png)
-documents/   project plan, guidance, key terms, status report
-sql-files/   schema, mock data, and queries
-presentation/ powerpoint drafts
+diagrams/     ER diagram (ER_Diagram_SDG14.png)
+documents/    SDG14_Design_Document.md — the single consolidated design doc
+documents/archive/   superseded .docx working files, kept for history
+sql-files/    schema+indexes, mock data, and queries
+Presentation/ PowerPoint drafts
 ```
 
 ## Getting started
@@ -47,12 +48,12 @@ presentation/ powerpoint drafts
 Run the scripts in order from a MySQL 8 client:
 
 ```sql
-SOURCE sql-files/SDG14_create_tables.sql;
-SOURCE sql-files/SDG14_insert_mock_data.sql;
-SOURCE sql-files/SDG14_queries.sql;
+SOURCE sql-files/SDG14_create_tablesV3.sql;
+SOURCE sql-files/SDG14_insert_mock_dataV3.sql;
+SOURCE sql-files/SDG14_queriesV3.sql;
 ```
 
-The first script drops and recreates the `sdg14_hudson` database, so all three can be re-run safely.
+The first script drops and recreates the sdg14_hudson database and now also creates the secondary indexes, so all three can be re-run safely in order.
 
 ## Status
 
@@ -61,10 +62,10 @@ The first script drops and recreates the `sdg14_hudson` database, so all three c
 - [x] Mock data
 - [x] Queries
 - [x] Data dictionary
-- [ ] Indexes
-- [ ] Normalization
-- [ ] Project definition
-- [ ] DBMS justification
+- [x] Indexes
+- [x] Normalization
+- [x] Project definition
+- [x] DBMS justification
 
 
 
